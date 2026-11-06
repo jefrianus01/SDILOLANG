@@ -63,43 +63,6 @@
             </div>
         </div>
 
-        <div class="mt-12">
-            <div class="flex flex-wrap items-end justify-between gap-3">
-                <div>
-                    <p class="text-2xs font-semibold uppercase tracking-[0.18em] text-gold-dark">Rombongan belajar</p>
-                    <h2 class="mt-2 font-display text-[30px] font-semibold leading-tight text-ink">Data kelas</h2>
-                </div>
-                <p class="text-[13px] text-gray-500">{{ $teacherCount }} guru aktif &middot; {{ $studentCount }} siswa aktif</p>
-            </div>
-
-            <div class="mt-6 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-card">
-                <div class="overflow-x-auto">
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>Kelas</th>
-                                <th>Wali Kelas</th>
-                                <th class="text-right">Jumlah Siswa</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse ($classrooms as $classroom)
-                                <tr>
-                                    <td class="font-semibold text-gray-900">{{ $classroom->name }}</td>
-                                    <td>{{ $classroom->waliKelas?->nama ?? 'Belum ditunjuk' }}</td>
-                                    <td class="text-right font-medium tabular-nums text-gray-800">{{ $classroom->students_count }}</td>
-                                </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="3" class="px-4 py-10 text-center text-[13px] text-gray-500">Belum ada data kelas.</td>
-                                </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
         <div class="relative mt-12 overflow-hidden rounded-2xl bg-ink px-8 py-10 text-white sm:px-10">
             <div class="hero-lines absolute inset-0 opacity-50" aria-hidden="true"></div>
             <div class="relative">

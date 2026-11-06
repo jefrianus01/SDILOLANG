@@ -33,19 +33,6 @@ class HomeController extends Controller
 
     public function profile(): View
     {
-        $academicYear = AcademicYear::current();
-
-        return view('public.profile', [
-            'classrooms' => $academicYear
-                ? Classroom::query()
-                    ->where('academic_year_id', $academicYear->id)
-                    ->with('waliKelas')
-                    ->withCount(['students' => fn ($q) => $q->where('status', 'aktif')])
-                    ->orderBy('level')
-                    ->get()
-                : collect(),
-            'teacherCount' => Teacher::query()->where('status', 'aktif')->count(),
-            'studentCount' => Student::query()->where('status', 'aktif')->count(),
-        ]);
+        return view('public.profile');
     }
 }

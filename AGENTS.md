@@ -1,23 +1,23 @@
 # AGENTS.md
 
-Laravel 12 school app ("Absensi SDI LOLANG"): Indonesian-language teacher/student attendance, reports/exports, and a public school website (Blade + Tailwind/Alpine). No git repository, no CI, no JS tests — verify by running the app or PHPUnit.
+Laravel 12 school app ("Absensi SDI LOLANG"): Indonesian-language teacher/student attendance, reports/exports, and a public school website (Blade + Tailwind/Alpine). No CI, no JS tests — verify by running the app or PHPUnit.
 
 ## Commands
 
 - Local dev: `php artisan serve` plus `npm run dev` (Vite). `npm run build` regenerates `public/build`; run it after CSS/JS changes.
 - `composer dev` runs serve + database queue listener + Pail + Vite concurrently.
-- DB is SQLite locally (`database/database.sqlite`, current `.env`): `php artisan migrate --seed` creates schema + demo data. `migrate:fresh --seed` is destructive.
+- DB is SQLite locally (`database/database.sqlite`, current `.env`): `php artisan migrate --seed` creates schema + master data (roles, teacher types, school settings). It does **not** create demo teachers/students/content. Create the first admin with `php artisan admin:create <username> --name="Nama Admin"`. `migrate:fresh --seed` is destructive.
 - Tests: `php artisan test` (PHPUnit). Focus with `php artisan test --filter=SmokeTest` or `php artisan test tests/Feature/ImportTest.php`.
 - Formatter: `vendor/bin/pint` (default preset, no `pint.json`). The tree is not Pint-clean — format only files you changed (`vendor/bin/pint app/Foo.php`), not the whole project.
 - Docker: `docker compose up --build` → Nginx :8080, MySQL 8, Mailpit :8025. Compose mounts the repo and reads the host `.env` (no `env_file:`); switch that file to the MySQL values shown in `.env.example` if you want the container DB. Vite must still be started separately (compose publishes 5173 but starts no dev server).
 - `composer setup` installs, keys, migrates, and builds assets but does **not** seed. On a fresh checkout it copies `.env.example` (MySQL/Docker) when `.env` is absent; keep the existing SQLite `.env` for local work. `composer test` clears config before testing.
 
-## Demo data and auth
+## Accounts and auth
 
 - Login uses `username`, not email; there is no self-registration.
-- Seeded accounts: `superadmin` / `Super#2026`; teachers use their NIP as username (e.g. `198502032010011002`) with password `Guru#2026`. The local DB is already seeded.
+- There is no demo data. Create or reset the Super Admin with `php artisan admin:create <username> --name="Nama Admin"` (omit `--password` to generate one; add `--force` to overwrite an existing username). The command prints the password once and sets `must_change_password=true`.
 - New/reset teacher accounts get a random password and `must_change_password=true`; middleware `password.changed` allows only profile, password update, and logout until it is changed. Preserve this when creating accounts or tests.
-- Seeders use `updateOrCreate` and can be rerun on intact data, but they reset demo passwords and force the demo academic year active. They also fail if demo teachers/students were soft-deleted, because unique `nip_nik`/`nomor_induk_siswa` rows still exist but `updateOrCreate` does not see trashed rows.
+- `DatabaseSeeder` only seeds roles/permissions, teacher types, and school settings; it is safe to rerun. There is no seeder that creates teachers, students, attendance, news, or gallery records.
 
 ## Architecture notes
 

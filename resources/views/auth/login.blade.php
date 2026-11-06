@@ -46,26 +46,4 @@
             <x-ui.icon name="arrow-right" class="h-4 w-4" />
         </x-primary-button>
     </form>
-
-    <details class="group mt-6 rounded-lg border border-gray-200 bg-gray-50/70">
-        <summary class="flex cursor-pointer list-none items-center justify-between gap-2 px-4 py-3 text-[13px] font-medium text-gray-600 [&::-webkit-details-marker]:hidden">
-            Akun demo untuk pengujian
-            <x-ui.icon name="chevron-down" class="h-4 w-4 text-gray-400 transition-transform group-open:rotate-180" />
-        </summary>
-
-        <div class="space-y-2 border-t border-gray-200 px-4 py-3 text-xs text-gray-600">
-            <div class="flex items-baseline justify-between gap-3">
-                <span class="text-gray-500">Super Admin</span>
-                <span class="font-mono text-gray-800">superadmin / Super#2026</span>
-            </div>
-            <div class="flex items-baseline justify-between gap-3">
-                <span class="text-gray-500">Kepala Sekolah</span>
-                <span class="font-mono text-gray-800">197001012000011001 / Guru#2026</span>
-            </div>
-            <div class="flex items-baseline justify-between gap-3">
-                <span class="text-gray-500">Wali Kelas</span>
-                <span class="font-mono text-gray-800">198502032010011002 / Guru#2026</span>
-            </div>
-        </div>
-    </details>
 </x-guest-layout>

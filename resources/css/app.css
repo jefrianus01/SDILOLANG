@@ -1,0 +1,244 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+[x-cloak] {
+    display: none !important;
+}
+
+@layer base {
+    :root {
+        color-scheme: light;
+    }
+
+    html {
+        scroll-behavior: smooth;
+        -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+        @apply bg-ivory font-sans text-ink antialiased;
+        font-feature-settings: 'kern' 1, 'liga' 1;
+    }
+
+    /* Judul memakai sans secara default; serif display hanya di situs publik. */
+    h1,
+    h2,
+    h3,
+    h4 {
+        @apply font-sans tracking-tight;
+    }
+
+    ::selection {
+        @apply bg-gold/30 text-ink;
+    }
+
+    :focus-visible {
+        outline: 2px solid theme('colors.gold.dark');
+        outline-offset: 2px;
+    }
+
+    [type='checkbox'],
+    [type='radio'] {
+        @apply text-brand-700 focus:ring-brand-500/40;
+    }
+}
+
+@layer components {
+    /* ---------- Permukaan & kartu ---------- */
+    .surface {
+        @apply rounded-xl border border-gray-200 bg-white shadow-card;
+    }
+
+    /* ---------- Tombol ---------- */
+    .btn {
+        @apply inline-flex select-none items-center justify-center gap-2 rounded-lg border border-transparent px-3.5 py-2 text-sm font-semibold leading-5 transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/40 focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50;
+    }
+
+    .btn-sm {
+        @apply px-3 py-1.5 text-[13px];
+    }
+
+    .btn-xs {
+        @apply gap-1.5 px-2.5 py-1 text-xs;
+    }
+
+    .btn-primary {
+        @apply border-brand-800 bg-brand-800 text-white hover:border-brand-700 hover:bg-brand-700 active:bg-brand-900;
+    }
+
+    .btn-secondary {
+        @apply border-gray-300 bg-white text-gray-700 hover:border-gray-400 hover:bg-gray-50 active:bg-gray-100;
+    }
+
+    .btn-ghost {
+        @apply text-gray-600 hover:bg-gray-100 hover:text-gray-900;
+    }
+
+    .btn-danger {
+        @apply border-rose-200 bg-rose-50 text-rose-700 hover:border-rose-300 hover:bg-rose-100;
+    }
+
+    .btn-danger-solid {
+        @apply border-rose-600 bg-rose-600 text-white hover:border-rose-700 hover:bg-rose-700;
+    }
+
+    .btn-gold {
+        @apply inline-flex items-center justify-center gap-2 border border-gold bg-gold px-6 py-3.5 text-[11px] font-bold uppercase tracking-[0.18em] text-ink transition duration-300 hover:border-gold-light hover:bg-gold-light focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2 focus:ring-offset-ink;
+    }
+
+    .btn-outline-light {
+        @apply inline-flex items-center justify-center gap-2 border border-white/25 px-6 py-3.5 text-[11px] font-bold uppercase tracking-[0.18em] text-white transition duration-300 hover:border-gold hover:text-gold focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2 focus:ring-offset-ink;
+    }
+
+    .btn-ink {
+        @apply inline-flex items-center justify-center gap-2 border border-ink bg-ink px-6 py-3.5 text-[11px] font-bold uppercase tracking-[0.18em] text-white transition duration-300 hover:border-ink-800 hover:bg-ink-800 focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2;
+    }
+
+    .link-arrow {
+        @apply inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.18em] transition duration-300;
+    }
+
+    /* ---------- Formulir ---------- */
+    .label {
+        @apply mb-1.5 block text-[13px] font-semibold text-gray-700;
+    }
+
+    .field {
+        @apply block w-full rounded-lg border-gray-300 bg-white text-sm text-gray-900 shadow-none placeholder:text-gray-400 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20;
+    }
+
+    .field-file {
+        @apply block w-full rounded-lg border border-gray-300 p-2 text-sm text-gray-700 file:mr-3 file:rounded-md file:border-0 file:bg-gray-100 file:px-3 file:py-1.5 file:text-sm file:font-semibold file:text-gray-700 hover:file:bg-gray-200;
+    }
+
+    /* ---------- Tabel data ---------- */
+    .data-table {
+        @apply min-w-full divide-y divide-gray-200 text-sm;
+    }
+
+    .data-table > thead {
+        @apply bg-gray-50/80;
+    }
+
+    .data-table > thead th {
+        @apply whitespace-nowrap px-4 py-2.5 text-left text-2xs font-semibold uppercase tracking-[0.08em] text-gray-500;
+    }
+
+    .data-table > tbody {
+        @apply divide-y divide-gray-100 bg-white;
+    }
+
+    .data-table > tbody > tr {
+        @apply transition-colors;
+    }
+
+    .data-table > tbody > tr:hover {
+        @apply bg-gray-50/70;
+    }
+
+    .data-table > tbody > tr > td {
+        @apply px-4 py-3 align-middle text-gray-600;
+    }
+
+    /* ---------- Navigasi ---------- */
+    .nav-section {
+        @apply px-3 pb-1.5 pt-1 text-2xs font-semibold uppercase tracking-[0.14em] text-gray-400;
+    }
+
+    .chip {
+        @apply inline-flex items-center gap-1.5 rounded-full border border-gray-200 bg-white px-2.5 py-1 text-xs font-medium text-gray-600;
+    }
+
+    /* ---------- Situs publik ---------- */
+    .eyebrow {
+        @apply text-[11px] font-bold uppercase tracking-[0.28em];
+    }
+
+    .article-body {
+        @apply text-[15px] leading-8 text-ink/70;
+    }
+
+    .article-body > :first-child {
+        @apply mt-0;
+    }
+
+    .article-body p {
+        @apply mb-5;
+    }
+
+    .article-body h2 {
+        @apply mb-4 mt-10 font-display text-3xl font-semibold leading-tight text-ink;
+    }
+
+    .article-body h3 {
+        @apply mb-3 mt-8 font-display text-2xl font-semibold leading-tight text-ink;
+    }
+
+    .article-body ul,
+    .article-body ol {
+        @apply mb-5 space-y-2 pl-6;
+    }
+
+    .article-body ul {
+        @apply list-disc;
+    }
+
+    .article-body ol {
+        @apply list-decimal;
+    }
+
+    .article-body a {
+        @apply font-semibold text-wine underline decoration-gold/60 underline-offset-4 transition hover:text-gold-dark;
+    }
+
+    .article-body blockquote {
+        @apply my-8 border-l-2 border-gold pl-6 font-display text-2xl italic leading-snug text-ink/80;
+    }
+
+    .article-body img {
+        @apply my-8 w-full rounded-2xl;
+    }
+
+    .article-body strong {
+        @apply font-semibold text-ink;
+    }
+}
+
+@layer utilities {
+    .text-balance {
+        text-wrap: balance;
+    }
+
+    .hero-lines {
+        background-image:
+            linear-gradient(to right, rgba(255, 255, 255, 0.055) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(255, 255, 255, 0.055) 1px, transparent 1px);
+        background-size: 72px 72px;
+    }
+
+    .paper-radial {
+        background-image:
+            radial-gradient(circle at 15% 20%, rgba(198, 161, 91, 0.12), transparent 28rem),
+            radial-gradient(circle at 85% 75%, rgba(110, 29, 42, 0.08), transparent 24rem);
+    }
+
+    .rule-gold {
+        background-image: linear-gradient(to right, theme('colors.gold.DEFAULT'), transparent);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}

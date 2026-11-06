@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600" role="img" aria-label="Foto sekolah">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#4f46e5"/>
+      <stop offset="100%" stop-color="#0d9488"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#g)"/>
+  <circle cx="650" cy="120" r="70" fill="#fbbf24" opacity="0.9"/>
+  <path d="M0 520 L180 380 L340 470 L520 320 L800 520 L800 600 L0 600 Z" fill="#0f172a" opacity="0.35"/>
+  <rect x="90" y="300" width="220" height="150" rx="8" fill="#ffffff" opacity="0.9"/>
+  <rect x="120" y="330" width="50" height="50" fill="#4f46e5"/>
+  <rect x="200" y="330" width="50" height="50" fill="#4f46e5"/>
+  <text x="400" y="200" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="42" font-weight="700" fill="#ffffff">SDI LOLANG</text>
+  <text x="400" y="245" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="20" fill="#e0e7ff">Galeri Sekolah</text>
+</svg>

@@ -1,5 +1,5 @@
 <x-public-layout title="Berita">
-    <section class="border-b border-gray-200 bg-white">
+    <section class="border-b border-gray-200 bg-gradient-to-b from-brand-50/80 to-white">
         <div class="mx-auto max-w-6xl px-4 py-12 sm:px-6">
             <div class="flex flex-wrap items-end justify-between gap-6">
                 <div>

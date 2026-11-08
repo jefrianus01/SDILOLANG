@@ -162,6 +162,9 @@
                             <x-ui.icon name="clipboard" class="h-4 w-4" />
                             Isi absensi hari ini
                         </a>
+                        @can('create', App\Models\Student::class)
+                            <a href="{{ route('students.create') }}" class="btn btn-secondary">+ Tambah Siswa</a>
+                        @endcan
                         <a href="{{ route('reports.class', $classroom) }}" class="btn btn-secondary">Rekap bulanan</a>
                     @endif
                 </x-slot>

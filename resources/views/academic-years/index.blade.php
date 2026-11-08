@@ -75,7 +75,10 @@
                                             </form>
                                         @endif
                                         <form method="POST" action="{{ route('academic-years.destroy', $year) }}"
-                                              onsubmit="return confirm('Hapus tahun ajaran {{ $year->name }}?')">
+                                              data-confirm="Hapus tahun ajaran {{ $year->name }}?"
+                                              data-confirm-title="Hapus tahun ajaran"
+                                              data-confirm-label="Ya, hapus"
+                                              data-confirm-tone="danger">
                                             @csrf
                                             @method('DELETE')
                                             <button class="btn btn-danger btn-xs">Hapus</button>

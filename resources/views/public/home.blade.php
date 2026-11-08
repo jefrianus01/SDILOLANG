@@ -4,77 +4,108 @@
         $vision = \App\Models\Setting::get(\App\Support\SchoolSetting::VISION, 'Terwujudnya peserta didik yang beriman, berkarakter, dan berprestasi.');
         $mission = \App\Models\Setting::get(\App\Support\SchoolSetting::MISSION, 'Menyelenggarakan pembelajaran aktif dan menyenangkan.');
         $description = \App\Models\Setting::get(\App\Support\SchoolSetting::DESCRIPTION, 'Sekolah dasar yang membentuk generasi berkarakter dan berprestasi.');
+
+        $heroSlides = collect([
+            'school/gmabra lb1.jpeg',
+            'school/gambar lb2.jpeg',
+            'school/gambar lb3.jpeg',
+        ])
+            ->filter(fn ($path) => is_file(public_path('storage/'.$path)))
+            ->take(3)
+            ->map(fn ($path) => Storage::disk('public')->url(implode('/', array_map('rawurlencode', explode('/', $path)))))
+            ->values();
     @endphp
 
     {{-- Hero --}}
-    <section class="relative overflow-hidden">
-        <div class="paper-radial absolute inset-0" aria-hidden="true"></div>
+    <section class="relative isolate min-h-[560px] overflow-hidden bg-brand-800 lg:min-h-[640px]">
+        @if ($heroSlides->isNotEmpty())
+            @php
+                $slideCount = $heroSlides->count();
+                $slideDuration = $slideCount * 8;
+            @endphp
 
-        <div class="relative mx-auto max-w-6xl px-4 pb-14 pt-12 sm:px-6 lg:pb-20 lg:pt-20">
+            <div class="hero-slideshow" aria-hidden="true">
+                @foreach ($heroSlides as $index => $slide)
+                    @php
+                        $slideDelay = -((($slideCount - $index) % $slideCount) * 8);
+                        $slideModifier = $slideCount === 1 ? 'hero-slide--still' : ($slideCount === 3 ? 'hero-slide--three' : '');
+                    @endphp
+
+                    <div class="hero-slide {{ $slideModifier }}"
+                         style="background-image: url('{{ $slide }}'); --hero-duration: {{ $slideDuration }}s; --hero-delay: {{ $slideDelay }}s;"></div>
+                @endforeach
+            </div>
+        @else
+            <div class="absolute inset-0 bg-gradient-to-br from-brand-700 via-brand-600 to-brand-500" aria-hidden="true"></div>
+        @endif
+
+        <div class="absolute inset-0 bg-gradient-to-b from-ink/85 via-ink/70 to-ink/45 lg:bg-gradient-to-r lg:from-ink/90 lg:via-ink/65 lg:to-ink/25" aria-hidden="true"></div>
+        <div class="paper-radial absolute inset-0 opacity-35" aria-hidden="true"></div>
+
+        <div class="relative mx-auto max-w-6xl px-4 pb-16 pt-16 sm:px-6 lg:pb-24 lg:pt-24">
             <div class="grid items-start gap-12 lg:grid-cols-12 lg:gap-16">
                 <div class="lg:col-span-7">
-                    <p class="flex items-center gap-3 text-2xs font-semibold uppercase tracking-[0.22em] text-gold-dark">
-                        <span class="h-px w-10 bg-gold" aria-hidden="true"></span>
+                    <p class="flex items-center gap-3 text-2xs font-semibold uppercase tracking-[0.22em] text-gold">
+                        <span class="h-px w-10 bg-gold/70" aria-hidden="true"></span>
                         Selamat datang
                     </p>
 
-                    <h1 class="mt-5 text-balance font-display text-[44px] font-semibold leading-[1.04] tracking-tight text-ink sm:text-[56px] lg:text-[64px]">
+                    <h1 class="mt-5 text-balance font-display text-[44px] font-semibold leading-[1.04] tracking-tight text-white drop-shadow-sm sm:text-[56px] lg:text-[64px]">
                         {{ $schoolName }}
                     </h1>
 
-                    <p class="mt-6 max-w-xl text-[15px] leading-8 text-gray-600 sm:text-base">
+                    <p class="mt-6 max-w-xl text-[15px] leading-8 text-white/80 sm:text-base">
                         {{ $description }}
                     </p>
 
                     <div class="mt-9 flex flex-wrap items-center gap-3">
-                        <a href="{{ route('school.profile') }}" class="btn-ink">
+                        <a href="{{ route('school.profile') }}" class="btn-gold">
                             Profil Sekolah
                         </a>
-                        <a href="{{ route('news.index') }}"
-                           class="inline-flex items-center justify-center gap-2 border border-gray-300 bg-white px-6 py-3.5 text-[11px] font-bold uppercase tracking-[0.18em] text-ink transition duration-300 hover:border-ink/40 hover:bg-white">
+                        <a href="{{ route('news.index') }}" class="btn-outline-light">
                             Berita Terbaru
                             <x-ui.icon name="arrow-right" class="h-3.5 w-3.5" />
                         </a>
                     </div>
 
-                    <div class="mt-10 flex flex-wrap items-center gap-x-6 gap-y-2 text-xs text-gray-500">
+                    <div class="mt-10 flex flex-wrap items-center gap-x-6 gap-y-2 text-xs text-white/85">
                         <span class="inline-flex items-center gap-2">
-                            <x-ui.icon name="map-pin" class="h-3.5 w-3.5 text-gray-400" />
+                            <x-ui.icon name="map-pin" class="h-3.5 w-3.5 text-gold/90" />
                             {{ \App\Support\SchoolSetting::address() ?: 'Alamat sekolah' }}
                         </span>
-                        <span class="hidden h-3 w-px bg-gray-300 sm:block"></span>
+                        <span class="hidden h-3 w-px bg-white/25 sm:block"></span>
                         <span>NPSN {{ \App\Models\Setting::get(\App\Support\SchoolSetting::NPSN, '-') }}</span>
                     </div>
                 </div>
 
                 <div class="lg:col-span-5">
-                    <div class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-card">
-                        <div class="border-b border-gray-100 px-6 py-5">
-                            <p class="text-2xs font-semibold uppercase tracking-[0.16em] text-gray-400">Sekilas sekolah</p>
-                            <p class="mt-1 font-display text-[26px] font-semibold leading-tight text-ink">Data pokok</p>
+                    <div class="overflow-hidden rounded-xl border border-white/25 bg-ink/30 shadow-soft backdrop-blur-[2px]">
+                        <div class="border-b border-white/20 px-6 py-5">
+                            <p class="text-2xs font-semibold uppercase tracking-[0.16em] text-gold">Sekilas sekolah</p>
+                            <p class="mt-1 font-display text-[26px] font-semibold leading-tight text-white drop-shadow-sm">Data pokok</p>
                         </div>
 
-                        <dl class="divide-y divide-gray-100 text-sm">
+                        <dl class="divide-y divide-white/15 text-sm">
                             <div class="flex items-start justify-between gap-6 px-6 py-3.5">
-                                <dt class="text-gray-500">Kepala Sekolah</dt>
-                                <dd class="text-right font-semibold text-gray-900">{{ \App\Models\Setting::get(\App\Support\SchoolSetting::HEADMASTER, '-') }}</dd>
+                                <dt class="text-white/65">Kepala Sekolah</dt>
+                                <dd class="text-right font-semibold text-white">{{ \App\Models\Setting::get(\App\Support\SchoolSetting::HEADMASTER, '-') }}</dd>
                             </div>
                             <div class="flex items-start justify-between gap-6 px-6 py-3.5">
-                                <dt class="shrink-0 text-gray-500">Telepon</dt>
-                                <dd class="text-right font-medium text-gray-800">{{ \App\Models\Setting::get(\App\Support\SchoolSetting::PHONE, '-') }}</dd>
+                                <dt class="shrink-0 text-white/65">Telepon</dt>
+                                <dd class="text-right font-medium text-white/90">{{ \App\Models\Setting::get(\App\Support\SchoolSetting::PHONE, '-') }}</dd>
                             </div>
                             <div class="flex items-start justify-between gap-6 px-6 py-3.5">
-                                <dt class="shrink-0 text-gray-500">Email</dt>
-                                <dd class="break-all text-right font-medium text-gray-800">{{ \App\Models\Setting::get(\App\Support\SchoolSetting::EMAIL, '-') }}</dd>
+                                <dt class="shrink-0 text-white/65">Email</dt>
+                                <dd class="break-all text-right font-medium text-white/90">{{ \App\Models\Setting::get(\App\Support\SchoolSetting::EMAIL, '-') }}</dd>
                             </div>
                             <div class="flex items-start justify-between gap-6 px-6 py-3.5">
-                                <dt class="shrink-0 text-gray-500">Alamat</dt>
-                                <dd class="text-right font-medium leading-6 text-gray-800">{{ \App\Support\SchoolSetting::address() ?: '-' }}</dd>
+                                <dt class="shrink-0 text-white/65">Alamat</dt>
+                                <dd class="text-right font-medium leading-6 text-white/90">{{ \App\Support\SchoolSetting::address() ?: '-' }}</dd>
                             </div>
                         </dl>
 
-                        <div class="border-t border-gray-100 px-6 py-4">
-                            <a href="{{ route('school.profile') }}" class="link-arrow text-ink transition-colors hover:text-wine">
+                        <div class="border-t border-white/20 px-6 py-4">
+                            <a href="{{ route('school.profile') }}" class="link-arrow text-gold transition-colors hover:text-white">
                                 Profil lengkap
                                 <x-ui.icon name="arrow-right" class="h-3.5 w-3.5" />
                             </a>
@@ -86,7 +117,7 @@
     </section>
 
     {{-- Angka ringkas --}}
-    <section class="border-y border-gray-200 bg-white">
+    <section class="border-y border-gray-200 bg-brand-50/60">
         <div class="mx-auto grid max-w-6xl grid-cols-2 gap-px bg-gray-200 px-0 lg:grid-cols-4">
             <div class="bg-white px-6 py-7">
                 <p class="text-2xs font-semibold uppercase tracking-[0.14em] text-gray-400">Guru aktif</p>
@@ -101,7 +132,7 @@
                 <p class="mt-2 font-display text-[38px] font-semibold leading-none text-ink tabular-nums">{{ $classrooms->count() }}</p>
             </div>
             <div class="flex flex-col justify-center bg-white px-6 py-7">
-                <a href="{{ route('gallery.index') }}" class="link-arrow text-ink transition-colors hover:text-wine">
+                <a href="{{ route('gallery.index') }}" class="link-arrow text-brand-700 transition-colors hover:text-brand-900">
                     Lihat galeri
                     <x-ui.icon name="arrow-right" class="h-3.5 w-3.5" />
                 </a>
@@ -135,14 +166,14 @@
     </section>
 
     {{-- Kelas --}}
-    <section class="border-y border-gray-200 bg-white py-16">
+    <section class="border-y border-gray-200 bg-parchment/60 py-16">
         <div class="mx-auto max-w-6xl px-4 sm:px-6">
             <div class="flex flex-wrap items-end justify-between gap-4">
                 <div>
                     <p class="text-2xs font-semibold uppercase tracking-[0.18em] text-gold-dark">Rombongan belajar</p>
                     <h2 class="mt-2 font-display text-[34px] font-semibold leading-tight text-ink">Kelas 1 sampai 6</h2>
                 </div>
-                <a href="{{ route('school.profile') }}" class="link-arrow text-ink transition-colors hover:text-wine">
+                <a href="{{ route('school.profile') }}" class="link-arrow text-brand-700 transition-colors hover:text-brand-900">
                     Profil lengkap
                     <x-ui.icon name="arrow-right" class="h-3.5 w-3.5" />
                 </a>
@@ -175,7 +206,7 @@
                 <p class="text-2xs font-semibold uppercase tracking-[0.18em] text-gold-dark">Kabar sekolah</p>
                 <h2 class="mt-2 font-display text-[34px] font-semibold leading-tight text-ink">Berita terbaru</h2>
             </div>
-            <a href="{{ route('news.index') }}" class="link-arrow text-ink transition-colors hover:text-wine">
+            <a href="{{ route('news.index') }}" class="link-arrow text-brand-700 transition-colors hover:text-brand-900">
                 Semua berita
                 <x-ui.icon name="arrow-right" class="h-3.5 w-3.5" />
             </a>
@@ -214,14 +245,14 @@
     </section>
 
     {{-- Galeri --}}
-    <section class="border-y border-gray-200 bg-white py-16">
+    <section class="border-y border-gray-200 bg-brand-50/50 py-16">
         <div class="mx-auto max-w-6xl px-4 sm:px-6">
             <div class="flex flex-wrap items-end justify-between gap-4">
                 <div>
                     <p class="text-2xs font-semibold uppercase tracking-[0.18em] text-gold-dark">Dokumentasi</p>
                     <h2 class="mt-2 font-display text-[34px] font-semibold leading-tight text-ink">Momen di sekolah</h2>
                 </div>
-                <a href="{{ route('gallery.index') }}" class="link-arrow text-ink transition-colors hover:text-wine">
+                <a href="{{ route('gallery.index') }}" class="link-arrow text-brand-700 transition-colors hover:text-brand-900">
                     Semua foto
                     <x-ui.icon name="arrow-right" class="h-3.5 w-3.5" />
                 </a>
@@ -250,7 +281,7 @@
 
     {{-- Kontak --}}
     <section class="mx-auto max-w-6xl px-4 pt-16 sm:px-6">
-        <div class="relative overflow-hidden rounded-2xl bg-ink px-7 py-12 text-white sm:px-12">
+        <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-brand-900 via-ink to-brand-950 px-7 py-12 text-white sm:px-12">
             <div class="hero-lines absolute inset-0 opacity-60" aria-hidden="true"></div>
 
             <div class="relative grid gap-10 lg:grid-cols-[1.3fr_1fr] lg:items-center">

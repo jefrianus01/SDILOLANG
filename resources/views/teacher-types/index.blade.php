@@ -61,7 +61,10 @@
                                             <button class="btn btn-secondary btn-xs">Simpan</button>
                                         </form>
                                         <form method="POST" action="{{ route('teacher-types.destroy', $type) }}"
-                                              onsubmit="return confirm('Hapus jenis guru {{ $type->name }}?')">
+                                              data-confirm="Hapus jenis guru {{ $type->name }}?"
+                                              data-confirm-title="Hapus jenis guru"
+                                              data-confirm-label="Ya, hapus"
+                                              data-confirm-tone="danger">
                                             @csrf
                                             @method('DELETE')
                                             <button class="btn btn-danger btn-xs">Hapus</button>

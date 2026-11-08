@@ -100,14 +100,20 @@
                                             <div class="flex flex-wrap items-center justify-end gap-2">
                                                 @can('resetPassword', $user)
                                                     <form method="POST" action="{{ route('users.reset-password', $user) }}"
-                                                          onsubmit="return confirm('Reset password {{ $user->name }}? Password baru hanya ditampilkan sekali.')">
+                                                          data-confirm="Reset password {{ $user->name }}? Password baru hanya ditampilkan sekali."
+                                                          data-confirm-title="Reset password"
+                                                          data-confirm-label="Ya, reset"
+                                                          data-confirm-tone="warning">
                                                         @csrf
                                                         <button class="btn btn-secondary btn-xs">Reset Password</button>
                                                     </form>
                                                 @endcan
                                                 @can('toggleActive', $user)
                                                     <form method="POST" action="{{ route('users.toggle-active', $user) }}"
-                                                          onsubmit="return confirm('Ubah status akun {{ $user->name }}?')">
+                                                          data-confirm="Ubah status akun {{ $user->name }}?"
+                                                          data-confirm-title="Ubah status akun"
+                                                          data-confirm-label="Ya, ubah"
+                                                          data-confirm-tone="warning">
                                                         @csrf
                                                         <button class="btn btn-xs {{ $user->is_active ? 'btn-danger' : 'btn-secondary' }}">
                                                             {{ $user->is_active ? 'Nonaktifkan' : 'Aktifkan' }}

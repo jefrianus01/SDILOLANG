@@ -4,7 +4,10 @@
 
         <x-ui.card title="Kenaikan Kelas / Kelulusan" description="Pindahkan seluruh siswa aktif dari satu kelas ke kelas lain, atau tandai lulus jika kelas tujuan dikosongkan.">
             <form method="POST" action="{{ route('students.promote') }}" class="space-y-4"
-                  onsubmit="return confirm('Proses kenaikan kelas akan mengubah data banyak siswa sekaligus. Lanjutkan?')">
+                  data-confirm="Proses kenaikan kelas akan mengubah data banyak siswa sekaligus. Lanjutkan?"
+                  data-confirm-title="Proses kenaikan kelas"
+                  data-confirm-label="Ya, proses"
+                  data-confirm-tone="warning">
                 @csrf
 
                 <div class="grid gap-4 sm:grid-cols-2">

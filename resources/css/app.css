@@ -95,6 +95,27 @@
         @apply inline-flex items-center justify-center gap-2 border border-ink bg-ink px-6 py-3.5 text-[11px] font-bold uppercase tracking-[0.18em] text-white transition duration-300 hover:border-ink-800 hover:bg-ink-800 focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2;
     }
 
+    /* ---------- Dialog konfirmasi ---------- */
+    .confirm-icon {
+        @apply flex h-11 w-11 shrink-0 items-center justify-center rounded-full ring-1;
+    }
+
+    .confirm-icon--primary {
+        @apply bg-brand-50 text-brand-700 ring-brand-100;
+    }
+
+    .confirm-icon--warning {
+        @apply bg-amber-50 text-amber-600 ring-amber-100;
+    }
+
+    .confirm-icon--danger {
+        @apply bg-rose-50 text-rose-600 ring-rose-100;
+    }
+
+    .confirm-panel {
+        animation: confirm-panel-in 180ms ease-out;
+    }
+
     .link-arrow {
         @apply inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.18em] transition duration-300;
     }
@@ -219,12 +240,131 @@
 
     .paper-radial {
         background-image:
-            radial-gradient(circle at 15% 20%, rgba(198, 161, 91, 0.12), transparent 28rem),
-            radial-gradient(circle at 85% 75%, rgba(110, 29, 42, 0.08), transparent 24rem);
+            radial-gradient(circle at 15% 20%, rgba(240, 180, 60, 0.16), transparent 28rem),
+            radial-gradient(circle at 85% 75%, rgba(26, 147, 173, 0.14), transparent 24rem);
     }
 
     .rule-gold {
         background-image: linear-gradient(to right, theme('colors.gold.DEFAULT'), transparent);
+    }
+
+    /* ---------- Slideshow latar beranda ---------- */
+    .hero-slideshow {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        background: linear-gradient(135deg, theme('colors.brand.700'), theme('colors.brand.500'));
+    }
+
+    .hero-slide {
+        position: absolute;
+        inset: -2%;
+        background-position: center;
+        background-size: cover;
+        opacity: 0;
+        animation-name: hero-slide;
+        animation-duration: var(--hero-duration, 16s);
+        animation-timing-function: ease-in-out;
+        animation-iteration-count: infinite;
+        animation-delay: var(--hero-delay, 0s);
+        will-change: opacity, transform;
+    }
+
+    .hero-slide--still {
+        animation: none;
+        opacity: 1;
+        transform: none;
+    }
+
+    .hero-slide--three {
+        animation-name: hero-slide-three;
+        animation-duration: var(--hero-duration, 24s);
+    }
+
+    @keyframes confirm-panel-in {
+        from {
+            opacity: 0;
+            transform: translateY(8px) scale(0.985);
+        }
+        to {
+            opacity: 1;
+            transform: none;
+        }
+    }
+
+    @keyframes hero-slide {
+        0% {
+            opacity: 1;
+            transform: scale(1.06) translateX(0);
+        }
+        42% {
+            opacity: 1;
+            transform: scale(1.12) translateX(-1.2%);
+        }
+        50% {
+            opacity: 0;
+            transform: scale(1.13) translateX(-1.6%);
+        }
+        92% {
+            opacity: 0;
+            transform: scale(1.06) translateX(0);
+        }
+        100% {
+            opacity: 1;
+            transform: scale(1.06) translateX(0);
+        }
+    }
+
+    @keyframes hero-slide-three {
+        0% {
+            opacity: 1;
+            transform: scale(1.06) translateX(0);
+        }
+        27% {
+            opacity: 1;
+            transform: scale(1.12) translateX(-1.2%);
+        }
+        33.333% {
+            opacity: 0;
+            transform: scale(1.13) translateX(-1.6%);
+        }
+        94% {
+            opacity: 0;
+            transform: scale(1.06) translateX(0);
+        }
+        100% {
+            opacity: 1;
+            transform: scale(1.06) translateX(0);
+        }
+    }
+
+    /* Reduced motion: tetap berganti foto, tanpa zoom/geser. */
+    @keyframes hero-slide-fade {
+        0%,
+        42% {
+            opacity: 1;
+        }
+        50%,
+        92% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
+
+    @keyframes hero-slide-fade-three {
+        0%,
+        27% {
+            opacity: 1;
+        }
+        33.333%,
+        94% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
     }
 }
 
@@ -240,5 +380,24 @@
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
         scroll-behavior: auto !important;
+    }
+
+    .hero-slide {
+        animation-name: hero-slide-fade !important;
+        animation-duration: var(--hero-duration, 16s) !important;
+        animation-timing-function: ease-in-out !important;
+        animation-iteration-count: infinite !important;
+        animation-delay: var(--hero-delay, 0s) !important;
+        transform: none !important;
+    }
+
+    .hero-slide--three {
+        animation-name: hero-slide-fade-three !important;
+        animation-duration: var(--hero-duration, 24s) !important;
+    }
+
+    .hero-slide--still {
+        animation: none !important;
+        opacity: 1 !important;
     }
 }

@@ -28,7 +28,10 @@
                             @endcan
                             @can('delete', $gallery)
                                 <form method="POST" action="{{ route('admin.gallery.destroy', $gallery) }}"
-                                      onsubmit="return confirm('Hapus foto ini dari galeri?')">
+                                      data-confirm="Hapus foto ini dari galeri?"
+                                      data-confirm-title="Hapus foto"
+                                      data-confirm-label="Ya, hapus"
+                                      data-confirm-tone="danger">
                                     @csrf
                                     @method('DELETE')
                                     <button class="btn btn-danger btn-xs">Hapus</button>

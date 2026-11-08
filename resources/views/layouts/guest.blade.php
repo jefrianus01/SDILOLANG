@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="theme-color" content="#0A1F33">
+    <meta name="theme-color" content="#0B2E3A">
     <title>Masuk — {{ \App\Support\SchoolSetting::name() }}</title>
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=manrope:400,500,600,700,800|cormorant-garamond:500,600,700&display=swap" rel="stylesheet" />
@@ -17,7 +17,7 @@
     @endphp
 
     <div class="min-h-screen lg:grid lg:grid-cols-[1.05fr_1fr]">
-        <aside class="relative hidden overflow-hidden bg-ink text-white lg:flex lg:flex-col lg:justify-between">
+        <aside class="relative hidden overflow-hidden bg-gradient-to-br from-brand-900 via-ink to-brand-950 text-white lg:flex lg:flex-col lg:justify-between">
             <div class="hero-lines absolute inset-0 opacity-70" aria-hidden="true"></div>
             <div class="absolute -left-24 bottom-0 h-80 w-80 rounded-full bg-gold/10 blur-3xl" aria-hidden="true"></div>
 

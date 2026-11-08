@@ -57,8 +57,9 @@ class StudentManagementTest extends TestCase
         [$waliA, $teacherA] = $this->teacherUser(Roles::WALI_KELAS);
         [$waliB, $teacherB] = $this->teacherUser(Roles::WALI_KELAS);
 
-        $classA = $this->classroomFor($teacherA);
-        $classB = $this->classroomFor($teacherB);
+        $year = $this->activeYear();
+        $classA = $this->classroomFor($teacherA, $year);
+        $classB = $this->classroomFor($teacherB, $year);
         $studentB = $this->studentIn($classB, ['nama' => 'Siswa Kelas B']);
 
         $this->actingAs($waliA)->get(route('students.edit', $studentB))->assertForbidden();
@@ -79,8 +80,9 @@ class StudentManagementTest extends TestCase
         [$waliA, $teacherA] = $this->teacherUser(Roles::WALI_KELAS);
         [$waliB, $teacherB] = $this->teacherUser(Roles::WALI_KELAS);
 
-        $classA = $this->classroomFor($teacherA);
-        $classB = $this->classroomFor($teacherB);
+        $year = $this->activeYear();
+        $classA = $this->classroomFor($teacherA, $year);
+        $classB = $this->classroomFor($teacherB, $year);
         $this->studentIn($classA, ['nama' => 'Siswa Milik A']);
         $this->studentIn($classB, ['nama' => 'Siswa Milik B']);
 
@@ -99,13 +101,33 @@ class StudentManagementTest extends TestCase
 
         $this->actingAs($headmaster)->get(route('students.index'))
             ->assertOk()
-            ->assertSee('Siswa Terlihat');
+            ->assertSee('Siswa Terlihat')
+            ->assertDontSee('Tambah Siswa');
 
         $this->actingAs($headmaster)->get(route('students.create'))->assertForbidden();
+        $this->actingAs($headmaster)->get(route('dashboard'))
+            ->assertOk()
+            ->assertDontSee('Tambah Siswa');
         $this->actingAs($headmaster)->post(route('students.store'), [
             'nomor_induk_siswa' => '2026999',
             'nama' => 'Tidak Boleh',
         ])->assertForbidden();
+        $this->actingAs($headmaster)->get(route('students.import.form'))->assertForbidden();
+        $this->actingAs($headmaster)->get(route('students.template'))->assertForbidden();
+    }
+
+    public function test_wali_kelas_sees_add_student_action(): void
+    {
+        [$wali, $teacher] = $this->teacherUser(Roles::WALI_KELAS);
+        $this->classroomFor($teacher);
+
+        $this->actingAs($wali)->get(route('students.index'))
+            ->assertOk()
+            ->assertSee('Tambah Siswa');
+
+        $this->actingAs($wali)->get(route('dashboard'))
+            ->assertOk()
+            ->assertSee('Tambah Siswa');
     }
 
     public function test_super_admin_cannot_create_students(): void

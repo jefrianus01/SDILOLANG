@@ -1,7 +1,7 @@
 <x-public-layout title="Profil Sekolah">
     @php($schoolName = \App\Support\SchoolSetting::name())
 
-    <section class="border-b border-gray-200 bg-white">
+    <section class="border-b border-gray-200 bg-gradient-to-b from-brand-50/80 to-white">
         <div class="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:py-16">
             <p class="flex items-center gap-3 text-2xs font-semibold uppercase tracking-[0.22em] text-gold-dark">
                 <span class="h-px w-8 bg-gold" aria-hidden="true"></span>

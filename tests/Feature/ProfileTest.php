@@ -25,8 +25,10 @@ class ProfileTest extends TestCase
 
         $user = User::factory()->create();
 
+        $png = base64_decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=');
+
         $response = $this->actingAs($user)->patch('/profile', [
-            'photo' => UploadedFile::fake()->image('foto.jpg'),
+            'photo' => UploadedFile::fake()->createWithContent('foto.png', $png),
         ]);
 
         $response->assertSessionHasNoErrors()->assertRedirect('/profile');
@@ -35,6 +37,7 @@ class ProfileTest extends TestCase
 
         $this->assertNotNull($user->photo_path);
         Storage::disk('public')->assertExists($user->photo_path);
+        $this->assertSame($png, Storage::disk('public')->get($user->photo_path));
     }
 
     public function test_user_can_not_change_name_or_username_from_profile(): void

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="theme-color" content="#0A1F33">
+    <meta name="theme-color" content="#0B2E3A">
     <title>{{ $title ? $title.' — ' : '' }}{{ \App\Support\SchoolSetting::name() }}</title>
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=manrope:400,500,600,700,800&display=swap" rel="stylesheet" />
@@ -33,7 +33,7 @@
         <aside :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"
                class="fixed inset-y-0 left-0 z-40 flex w-[264px] flex-col border-r border-gray-200 bg-white transition-transform duration-200 ease-out lg:sticky lg:top-0 lg:h-screen lg:translate-x-0">
 
-            <div class="flex h-16 shrink-0 items-center gap-3 border-b border-gray-100 px-5">
+            <div class="flex h-16 shrink-0 items-center gap-3 border-b border-gray-100 bg-gradient-to-r from-brand-50/80 to-white px-5">
                 @if ($logo)
                     <img src="{{ Storage::disk('public')->url($logo) }}" alt="Logo {{ \App\Support\SchoolSetting::name() }}"
                          class="h-9 w-9 shrink-0 rounded-lg object-contain ring-1 ring-gray-200">
@@ -213,6 +213,7 @@
 
         <div class="flex min-w-0 flex-1 flex-col">
             <header class="sticky top-0 z-20 border-b border-gray-200 bg-white/85 backdrop-blur">
+                <div class="pointer-events-none absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r from-brand-500 via-gold to-brand-500" aria-hidden="true"></div>
                 <div class="flex h-16 items-center gap-3 px-4 sm:px-6 lg:px-8">
                     <button type="button" @click="sidebarOpen = ! sidebarOpen"
                             class="-ml-1 rounded-lg p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700 lg:hidden"
@@ -357,6 +358,8 @@
             </div>
         </div>
     @endif
+
+    <x-ui.confirm-modal />
 
     @stack('scripts')
 </body>

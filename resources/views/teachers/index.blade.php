@@ -76,14 +76,20 @@
                                         @endcan
                                         @can('resetPassword', $teacher)
                                             <form method="POST" action="{{ route('teachers.reset-password', $teacher) }}"
-                                                  onsubmit="return confirm('Reset password {{ $teacher->nama }}? Password baru hanya ditampilkan sekali.')">
+                                                  data-confirm="Reset password {{ $teacher->nama }}? Password baru hanya ditampilkan sekali."
+                                                  data-confirm-title="Reset password"
+                                                  data-confirm-label="Ya, reset"
+                                                  data-confirm-tone="warning">
                                                 @csrf
                                                 <button class="btn btn-secondary btn-xs">Reset Password</button>
                                             </form>
                                         @endcan
                                         @can('delete', $teacher)
                                             <form method="POST" action="{{ route('teachers.destroy', $teacher) }}"
-                                                  onsubmit="return confirm('Hapus {{ $teacher->nama }}? Akun login akan dinonaktifkan (soft delete).')">
+                                                  data-confirm="Hapus {{ $teacher->nama }}? Akun login akan dinonaktifkan (soft delete)."
+                                                  data-confirm-title="Hapus data guru"
+                                                  data-confirm-label="Ya, hapus"
+                                                  data-confirm-tone="danger">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button class="btn btn-danger btn-xs">Hapus</button>

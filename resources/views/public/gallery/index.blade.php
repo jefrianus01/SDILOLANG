@@ -1,5 +1,5 @@
 <x-public-layout title="Galeri">
-    <section class="border-b border-gray-200 bg-white">
+    <section class="border-b border-gray-200 bg-gradient-to-b from-brand-50/80 to-white">
         <div class="mx-auto max-w-6xl px-4 py-12 sm:px-6">
             <p class="text-2xs font-semibold uppercase tracking-[0.18em] text-gold-dark">Dokumentasi</p>
             <h1 class="mt-3 font-display text-[40px] font-semibold leading-tight text-ink">Galeri kegiatan</h1>

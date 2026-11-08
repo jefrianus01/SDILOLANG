@@ -20,9 +20,9 @@
 
             <p class="mt-1.5 max-w-2xl text-sm leading-6 text-gray-500">
                 @if ($readOnly)
-                    Anda dapat melihat data siswa, namun hanya wali kelas yang boleh menambah atau mengubah data.
+                    Anda dapat melihat data siswa, namun hanya guru kelas (wali kelas) yang boleh menambah atau mengubah data.
                 @else
-                    Data siswa dikelola oleh wali kelas masing-masing. Hanya NIS, nama, dan kelas yang diisi.
+                    Data siswa dikelola oleh guru kelas (wali kelas) masing-masing. Hanya NIS, nama, dan kelas yang diisi.
                 @endif
             </p>
             @if ($homeroom)
@@ -88,7 +88,10 @@
                                         @endcan
                                         @can('delete', $student)
                                             <form method="POST" action="{{ route('students.destroy', $student) }}"
-                                                  onsubmit="return confirm('Hapus {{ $student->nama }}? Data akan dihapus (soft delete).')">
+                                                  data-confirm="Hapus {{ $student->nama }}? Data akan dihapus (soft delete)."
+                                                  data-confirm-title="Hapus data siswa"
+                                                  data-confirm-label="Ya, hapus"
+                                                  data-confirm-tone="danger">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button class="btn btn-danger btn-xs">Hapus</button>

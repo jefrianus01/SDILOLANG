@@ -43,7 +43,10 @@
                             </form>
 
                             <form method="POST" action="{{ route('teacher-attendance.reject', $attendance) }}" class="space-y-2"
-                                  onsubmit="return confirm('Tolak pengajuan ini? Status akan dicatat sebagai alpa.')">
+                                  data-confirm="Tolak pengajuan ini? Status akan dicatat sebagai alpa."
+                                  data-confirm-title="Tolak pengajuan"
+                                  data-confirm-label="Ya, tolak"
+                                  data-confirm-tone="danger">
                                 @csrf
                                 <x-input-label for="reject-note-{{ $attendance->id }}" value="Alasan penolakan" />
                                 <textarea id="reject-note-{{ $attendance->id }}" name="note" rows="2" placeholder="Alasan penolakan"

@@ -6,14 +6,17 @@ use App\Models\User;
 use App\Support\Roles;
 use Database\Seeders\RolePermissionSeeder;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rules\Password;
 use Spatie\Permission\Models\Role;
+use Symfony\Component\Console\Formatter\OutputFormatter;
 
 class CreateAdmin extends Command
 {
     protected $signature = 'admin:create
         {username=admin : Username untuk login}
-        {--name=Administrator : Nama lengkap admin}
+        {--name= : Nama lengkap admin (default: Administrator)}
         {--password= : Password awal (kosongkan untuk dibuat acak)}
         {--force : Timpa akun dengan username yang sama}';
 
@@ -30,10 +33,9 @@ class CreateAdmin extends Command
         }
 
         $username = trim((string) $this->argument('username'));
-        $name = trim((string) $this->option('name'));
 
-        if ($username === '' || $name === '') {
-            $this->components->error('Username dan nama tidak boleh kosong.');
+        if ($username === '') {
+            $this->components->error('Username tidak boleh kosong.');
 
             return self::FAILURE;
         }
@@ -46,7 +48,27 @@ class CreateAdmin extends Command
             return self::FAILURE;
         }
 
+        $name = trim((string) ($this->option('name') ?: $existing?->name ?: 'Administrator'));
+
+        if ($name === '') {
+            $this->components->error('Nama tidak boleh kosong.');
+
+            return self::FAILURE;
+        }
+
         $password = (string) ($this->option('password') ?: Str::password(16));
+
+        $validator = Validator::make(
+            ['password' => $password],
+            ['password' => ['required', 'string', Password::defaults()]],
+            ['password.min' => 'Password minimal :min karakter'],
+        );
+
+        if ($validator->fails()) {
+            $this->components->error($validator->errors()->first('password'));
+
+            return self::FAILURE;
+        }
 
         $user = User::query()->updateOrCreate(
             ['username' => $username],
@@ -62,8 +84,8 @@ class CreateAdmin extends Command
 
         $this->components->info($existing ? 'Akun Super Admin diperbarui.' : 'Akun Super Admin dibuat.');
         $this->newLine();
-        $this->line('  Username : <options=bold>'.$username.'</>');
-        $this->line('  Password : <options=bold>'.$password.'</>');
+        $this->line('  Username : <options=bold>'.OutputFormatter::escape($username).'</>');
+        $this->line('  Password : <options=bold>'.OutputFormatter::escape($password).'</>');
         $this->newLine();
         $this->components->warn('Password hanya ditampilkan sekali. Ganti saat login pertama.');
 

@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#0A1F33">
+    <meta name="theme-color" content="#0B2E3A">
     <title>{{ $title ? $title.' — ' : '' }}{{ \App\Support\SchoolSetting::name() }}</title>
     <meta name="description" content="{{ \App\Models\Setting::get(\App\Support\SchoolSetting::DESCRIPTION, 'Website resmi '.\App\Support\SchoolSetting::name()) }}">
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -30,7 +30,8 @@
         Lewati ke konten
     </a>
 
-    <header class="sticky top-0 z-30 border-b border-gray-200/80 bg-ivory/90 backdrop-blur">
+    <header class="sticky top-0 z-30 border-b border-gray-200/80 bg-white/85 backdrop-blur">
+        <div class="h-1 w-full bg-gradient-to-r from-brand-500 via-gold to-brand-500" aria-hidden="true"></div>
         <div class="mx-auto flex h-[72px] max-w-6xl items-center justify-between gap-6 px-4 sm:px-6">
             <a href="{{ route('home') }}" class="flex min-w-0 items-center gap-3">
                 @if ($logo)
@@ -77,7 +78,7 @@
             </div>
         </div>
 
-        <div x-cloak x-show="open" x-transition.origin.top class="border-t border-gray-200 bg-ivory px-4 py-3 md:hidden">
+        <div x-cloak x-show="open" x-transition.origin.top class="border-t border-gray-200 bg-white px-4 py-3 md:hidden">
             <div class="flex flex-col">
                 @foreach ($navItems as $item)
                     <a href="{{ route($item['route']) }}"
@@ -100,7 +101,7 @@
 
     <main id="main-content">{{ $slot }}</main>
 
-    <footer class="mt-24 border-t border-white/10 bg-ink text-white/70">
+    <footer class="mt-24 border-t border-white/10 bg-gradient-to-br from-brand-950 via-ink to-brand-900 text-white/70">
         <div class="mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-2 lg:grid-cols-4">
             <div class="lg:col-span-1">
                 <div class="flex items-center gap-3">
@@ -115,11 +116,11 @@
                 </div>
 
                 <p class="mt-4 text-[13px] leading-6">{{ \App\Support\SchoolSetting::address() ?: 'Alamat sekolah belum diatur.' }}</p>
-                <p class="mt-3 text-2xs uppercase tracking-[0.14em] text-white/40">NPSN {{ \App\Models\Setting::get(\App\Support\SchoolSetting::NPSN, '-') }}</p>
+                <p class="mt-3 text-2xs uppercase tracking-[0.14em] text-white/65">NPSN {{ \App\Models\Setting::get(\App\Support\SchoolSetting::NPSN, '-') }}</p>
             </div>
 
             <div>
-                <p class="text-2xs font-semibold uppercase tracking-[0.16em] text-white/40">Tautan</p>
+                <p class="text-2xs font-semibold uppercase tracking-[0.16em] text-white/65">Tautan</p>
                 <div class="mt-4 flex flex-col gap-2.5 text-[13px]">
                     @foreach ($navItems as $item)
                         <a href="{{ route($item['route']) }}" class="transition-colors hover:text-gold">{{ $item['label'] }}</a>
@@ -128,28 +129,28 @@
             </div>
 
             <div>
-                <p class="text-2xs font-semibold uppercase tracking-[0.16em] text-white/40">Informasi</p>
+                <p class="text-2xs font-semibold uppercase tracking-[0.16em] text-white/65">Informasi</p>
                 <div class="mt-4 space-y-2.5 text-[13px]">
                     <p class="flex items-start gap-2.5">
-                        <x-ui.icon name="user" class="mt-0.5 h-3.5 w-3.5 shrink-0 text-white/35" />
+                        <x-ui.icon name="user" class="mt-0.5 h-3.5 w-3.5 shrink-0 text-white/50" />
                         <span>Kepala Sekolah<br><span class="text-white">{{ \App\Models\Setting::get(\App\Support\SchoolSetting::HEADMASTER, '-') }}</span></span>
                     </p>
                     <p class="flex items-start gap-2.5">
-                        <x-ui.icon name="clock" class="mt-0.5 h-3.5 w-3.5 shrink-0 text-white/35" />
+                        <x-ui.icon name="clock" class="mt-0.5 h-3.5 w-3.5 shrink-0 text-white/50" />
                         <span>Jam layanan {{ \App\Models\Setting::get(\App\Support\SchoolSetting::CHECK_IN_TIME, '06:30') }}–{{ \App\Models\Setting::get(\App\Support\SchoolSetting::CHECK_OUT_TIME, '14:00') }}</span>
                     </p>
                 </div>
             </div>
 
             <div>
-                <p class="text-2xs font-semibold uppercase tracking-[0.16em] text-white/40">Kontak</p>
+                <p class="text-2xs font-semibold uppercase tracking-[0.16em] text-white/65">Kontak</p>
                 <div class="mt-4 space-y-2.5 text-[13px]">
                     <p class="flex items-start gap-2.5">
-                        <x-ui.icon name="phone" class="mt-0.5 h-3.5 w-3.5 shrink-0 text-white/35" />
+                        <x-ui.icon name="phone" class="mt-0.5 h-3.5 w-3.5 shrink-0 text-white/50" />
                         <span>{{ \App\Models\Setting::get(\App\Support\SchoolSetting::PHONE, '-') }}</span>
                     </p>
                     <p class="flex items-start gap-2.5">
-                        <x-ui.icon name="mail" class="mt-0.5 h-3.5 w-3.5 shrink-0 text-white/35" />
+                        <x-ui.icon name="mail" class="mt-0.5 h-3.5 w-3.5 shrink-0 text-white/50" />
                         <span class="break-all">{{ \App\Models\Setting::get(\App\Support\SchoolSetting::EMAIL, '-') }}</span>
                     </p>
                 </div>
@@ -162,7 +163,7 @@
         </div>
 
         <div class="border-t border-white/10">
-            <div class="mx-auto flex max-w-6xl flex-col gap-2 px-4 py-5 text-xs text-white/40 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+            <div class="mx-auto flex max-w-6xl flex-col gap-2 px-4 py-5 text-xs text-white/65 sm:flex-row sm:items-center sm:justify-between sm:px-6">
                 <p>&copy; {{ date('Y') }} {{ \App\Support\SchoolSetting::name() }}. Seluruh hak cipta dilindungi.</p>
                 <p>Sistem Informasi Absensi Sekolah</p>
             </div>

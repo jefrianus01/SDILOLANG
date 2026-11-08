@@ -39,7 +39,10 @@
 
                 @if ($user->photo_path)
                     <form method="POST" action="{{ route('profile.photo.destroy') }}" class="mt-3"
-                          onsubmit="return confirm('Hapus foto profil?')">
+                          data-confirm="Hapus foto profil?"
+                          data-confirm-title="Hapus foto profil"
+                          data-confirm-label="Ya, hapus"
+                          data-confirm-tone="danger">
                         @csrf
                         @method('DELETE')
                         <button class="btn btn-danger">Hapus Foto</button>

@@ -49,7 +49,10 @@
                                         @endcan
                                         @can('delete', $item)
                                             <form method="POST" action="{{ route('admin.news.destroy', $item) }}"
-                                                  onsubmit="return confirm('Hapus berita ini?')">
+                                                  data-confirm="Hapus berita ini?"
+                                                  data-confirm-title="Hapus berita"
+                                                  data-confirm-label="Ya, hapus"
+                                                  data-confirm-tone="danger">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button class="btn btn-danger btn-xs">Hapus</button>

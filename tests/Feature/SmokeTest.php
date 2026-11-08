@@ -120,7 +120,6 @@ class SmokeTest extends TestCase
             '/tahun-ajaran',
             '/kelas',
             '/siswa',
-            '/siswa/import',
             '/siswa/promote',
             '/siswa/export/excel',
             '/siswa/export/pdf',
@@ -147,6 +146,9 @@ class SmokeTest extends TestCase
         foreach ($urls as $url) {
             $this->get($url)->assertOk();
         }
+
+        // Super admin bersifat read-only untuk siswa; impor hanya untuk wali kelas.
+        $this->get('/siswa/import')->assertForbidden();
     }
 
     public function test_headmaster_pages_render(): void
